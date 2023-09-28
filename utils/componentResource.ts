@@ -31,6 +31,8 @@ export class StaticIPInstance extends pulumi.ComponentResource {
 
         this.address = new gcp.compute.Address("staticIP", {
             name: `${name}-ip`,
+        }, {
+            parent: this
         });
         
         const debianImage = gcp.compute.getImage({
@@ -55,6 +57,8 @@ export class StaticIPInstance extends pulumi.ComponentResource {
                 "name": name,
                 "ssh-keys": args.sshKeys.join("\n")
             }
+        }, {
+            parent: this
         });
         
     }
