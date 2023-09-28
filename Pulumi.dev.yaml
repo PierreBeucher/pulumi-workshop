@@ -1,0 +1,4 @@
+config:
+  gcp:project: crafteo-sandbox
+  gcp:region: europe-west9
+  gcp:zone: europe-west9-a
