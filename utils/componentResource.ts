@@ -11,6 +11,8 @@ interface StaticIPInstanceArgs {
  * Use with:
  *
  * ``` 
+ * import { StaticIPInstance } from "./utils/componentResource"
+ * 
  * const computeInstance = new StaticIPInstance("my-instance", {
  *   sshKeys: [ "pierre:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCaDcbK5+r0s0cbl9RC1kKDr0p3vJfErE6RIOwNeXEP pbeucher@nixos" ],
  *    type: "e2-micro"
