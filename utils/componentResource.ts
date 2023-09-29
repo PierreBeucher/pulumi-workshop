@@ -2,7 +2,24 @@ import * as pulumi from "@pulumi/pulumi";
 import * as gcp from "@pulumi/gcp";
 
 interface StaticIPInstanceArgs {
+
+    /**
+     * Instance type, e.g. e2-micro
+     */
     type: string,
+
+    /**
+     * Instance image, e.g. debian-11-bullseye-v20230912 
+     */
+    image: string,
+
+    /**
+     * Public SSH keys to connect on instance. 
+     * Format 'USER:KEY' e.g. 'username:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILg6UtHDNyMNAh0GjaytsJdrUxjtLy3APXqZfNZhvCeT dev'
+     * See https://cloud.google.com/compute/docs/connect/add-ssh-keys#terraform_1
+     * 
+     * Note: we would have stronger typing such as `sshKeys: { user: string, key: string }[]`
+     */
     sshKeys: string[]
 }
 
@@ -35,16 +52,11 @@ export class StaticIPInstance extends pulumi.ComponentResource {
             parent: this
         });
         
-        const debianImage = gcp.compute.getImage({
-            family: "debian-11",
-            project: "debian-cloud",
-        });
-        
         new gcp.compute.Instance("instance", {
             machineType: args.type,
             bootDisk: {
                 initializeParams: {
-                    image: debianImage.then(i => i.selfLink)
+                    image: args.image
                 },
             },
             networkInterfaces: [{
